@@ -1,4 +1,5 @@
-Loan Management System Link:https://loanmanagement-2-04gr.onrender.com/
+Loan Management System 
+Link:https://loanmanagement-2-04gr.onrender.com/
 
 A web-based Loan Management System built with Django and PostgreSQL.
 This project helps manage borrowers, loans, repayments, and repayment schedules in a structured and efficient way.
