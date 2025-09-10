@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2>Borrowers</h2>
+    <a class="btn" href="{% url 'borrower_create' %}">+ Add Borrower</a>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Account</th>
+        <th>Status</th>
+        <th>Current Balance</th>
+        <th>Loans</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for b in borrowers %}
+      <tr>
+        <td>
+          <div><strong>{{ b.name }}</strong></div>
+        </td>
+        <td>{{ b.account_no }}</td>  
+        <td>
+          {% if b.is_active %}
+            <span class="badge ok">Active</span>
+          {% else %}
+            <span class="badge warn">Inactive</span>
+          {% endif %}
+        </td>
+        <td>{{ b.current_balance }}</td>
+        <td>{{ b.loans.count }}</td>
+        <td class="edit">
+          <a class="btn ghost" href="{% url 'borrower_edit' b.id %}">Edit</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No borrowers yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

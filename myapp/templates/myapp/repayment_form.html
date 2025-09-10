@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h2>{{ title }}</h2>
+<form method="post" id="repaymentForm" class="grid" style="max-width:520px">
+  {% csrf_token %}
+  
+  <div class="field">
+    <label class="label">Borrower</label>
+    {{ form.borrower }}
+  </div>
+
+  <div class="field">
+    <label class="label">Loan</label>
+    {{ form.loan }}
+  </div>
+
+  <div class="field">
+    <label class="label">Amount</label>
+    {{ form.amount }}
+  </div>
+
+  <div class="field">
+    <label class="label">Paid On</label>
+    {{ form.paid_on }}
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" type="submit">Save Repayment</button>
+    <a class="btn flat" href="javascript:history.back()">Cancel</a>
+  </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $("#id_borrower").change(function () {
+    var borrowerId = $(this).val();
+    $.ajax({
+      url: "{% url 'ajax_load_loans' %}",
+      data: {
+        "borrower_id": borrowerId
+      },
+      success: function (data) {
+        $("#id_loan").html("");
+        data.forEach(function (loan) {
+          $("#id_loan").append(new Option(loan.loan_id, loan.id));
+        });
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>No-Interest Loan Management</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'myapp/style.css' %}">
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="/">No-Interest Loan Management</a>
+    <a href="/">Borrowers</a>
+    <a href="/loans/new/">New Loan</a>
+    <a href="/repayments/new/">Record Repayment</a>
+    <a href="{% url 'loan_lookup' %}">Loan Details</a> 
+  </nav>
+
+  <div class="page">
+    {% if messages %}
+      <div class="messages">{% for m in messages %}<p>{{ m }}</p>{% endfor %}</div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}{% block content %}
+<h2>Loan {{ loan.loan_id }}</h2>
+
+<div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));gap:16px">
+  <div>
+    <div class="label">Borrower</div>
+    <div><strong>{{ loan.borrower.name }}</strong> — {{ loan.borrower.account_no }}</div>
+  </div>
+  <div>
+    <div class="label">Amount</div><div>{{ loan.amount }}</div>
+    <div class="label">Months</div><div>{{ loan.months }}</div>
+  </div>
+  <div>
+    <div class="label">Status</div>
+    {% if loan.status == "APPROVED" %}<span class="badge ok">Approved</span>
+    {% elif loan.status == "PENDING" %}<span class="badge neutral">Pending</span>
+    {% elif loan.status == "REJECTED" %}<span class="badge warn">Rejected</span>
+    {% else %}<span class="badge">Closed</span>{% endif %}
+    <div class="label" style="margin-top:6px">Created</div><div>{{ loan.created_at }}</div>
+  </div>
+  <div>
+    <div class="label">Totals</div>
+    <div>Paid: <strong>{{ loan.total_paid }}</strong></div>
+    <div>Balance: <strong>{{ loan.balance }}</strong></div>
+  </div>
+</div>
+
+<div class="toolbar" style="margin-top:12px">
+  {% if loan.status == "PENDING" %}
+    <a class="btn" href="/loans/{{ loan.loan_id }}/approve/">Approve</a>
+    <a class="btn flat" href="/loans/{{ loan.loan_id }}/reject/">Reject</a>
+  {% endif %}
+  <a class="btn ghost" href="/repayments/new/?loan={{ loan.loan_id }}">Record Repayment</a>
+</div>
+
+<h3 style="margin-top:18px">Repayment Schedule</h3>
+<table class="table">
+  <thead><tr><th>#</th><th>Due Date</th><th>Due</th><th>Paid</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for r in schedule %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ r.due_date }}</td>
+      <td>{{ r.due_amount }}</td>
+      <td>{{ r.paid_amount }}</td>
+      <td>{% if r.is_paid %}<span class="badge ok">Paid</span>{% else %}<span class="badge neutral">Pending</span>{% endif %}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5">No schedule yet (approve the loan to generate EMIs).</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h3 style="margin-top:18px">Repayments</h3>
+<table class="table">
+  <thead><tr><th>Date</th><th>Amount</th><th>Receipt No.</th></tr></thead>
+  <tbody>
+    {% for p in repayments %}
+      <tr><td>{{ p.paid_on }}</td><td>{{ p.amount }}</td><td>{{ p.receipt_no }}</td></tr>
+    {% empty %}
+      <tr><td colspan="3">No repayments recorded.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

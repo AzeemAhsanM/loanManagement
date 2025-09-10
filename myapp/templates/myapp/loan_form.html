@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h2>Create Loan Application</h2>
+<form method="post" class="grid" style="max-width:520px">
+  {% csrf_token %}
+  <div class="field"><label class="label">Borrower</label>{{ form.borrower }}</div>
+  <div class="field"><label class="label">Amount</label>{{ form.amount }}</div>
+  <div class="field"><label class="label">Months</label>{{ form.months }}</div>
+  <div class="toolbar">
+    <button class="btn" type="submit">Create</button>
+    <a class="btn flat" href="/">Cancel</a>
+  </div>
+</form>
+{% endblock %}

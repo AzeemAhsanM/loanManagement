@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Find Loan</h2>
+
+<form id="lookupForm" onsubmit="return gotoDetails();">
+  <label>Borrower
+    <select id="borrowerSelect" name="borrower">
+      <option value="">-- select borrower --</option>
+      {% for b in borrowers %}
+        <option value="{{ b.id }}">{{ b.name }}{{ b.account_number }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label style="margin-left:8px">Loan
+    <select id="loanSelect" name="loan">
+      <option value="">-- select loan --</option>
+    </select>
+  </label>
+
+  <button class="btn" type="submit" style="margin-left:8px">View Details</button>
+</form>
+
+<script>
+const borrowerSel = document.getElementById('borrowerSelect');
+const loanSel = document.getElementById('loanSelect');
+
+borrowerSel.addEventListener('change', function(){
+  loanSel.innerHTML = '<option value="">Loading...</option>';
+  const id = this.value;
+  if(!id){ loanSel.innerHTML = '<option value="">-- select loan --</option>'; return; }
+  fetch('{% url "load_loans" %}?borrower_id=' + encodeURIComponent(id))
+    .then(r => r.json())
+    .then(data => {
+      if(!data.length){
+        loanSel.innerHTML = '<option value="">No loans for this borrower</option>';
+        return;
+      }
+      loanSel.innerHTML = '<option value="">-- select loan --</option>';
+      data.forEach(item => {
+        loanSel.insertAdjacentHTML('beforeend', `<option value="${item.loan_id}">${item.loan_id} (${item.status})</option>`);
+      });
+    })
+    .catch(()=>{ loanSel.innerHTML = '<option value="">Error loading loans</option>'; });
+});
+
+function gotoDetails(){
+  const loanId = loanSel.value;
+  if(!loanId){ alert('Please select a loan'); return false; }
+  window.location.href = '/loans/' + encodeURIComponent(loanId) + '/';
+  return false;
+}
+</script>
+{% endblock %}
