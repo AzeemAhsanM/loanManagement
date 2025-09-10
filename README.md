@@ -6,8 +6,11 @@ This project helps manage borrowers, loans, repayments, and repayment schedules 
 🚀 Features
 
 👤 Borrower Management – Add, update, and manage borrower details
+
 💳 Loan Management – Create loans with principal, interest rate, and tenure
+
 📅 Repayment Schedule – Automatically generate repayment schedules
+
 💰 Repayments – Track repayments and pending amounts
 
 🛠️ Tech Stack
