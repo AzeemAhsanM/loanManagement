@@ -75,16 +75,15 @@ WSGI_APPLICATION = 'loanManagement.wsgi.application'
 
 
 DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": "loan_management_db",
-            "USER": "root",
-            "PASSWORD": "Azeemmysql@1237",
-            "HOST": "127.0.0.1",
-            "PORT": "3306",
-            "OPTIONS": {"charset": "utf8mb4"},
-        }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "loan_db",     
+        "USER": "postgres",               
+        "PASSWORD": "azeem",   
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
+}
 
 
 # Password validation
