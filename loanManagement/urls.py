@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myapp import views
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 #Define URL patterns for the app
 
@@ -37,5 +37,3 @@ urlpatterns = [
 
     path("repayments/new/", views.repayment_create, name="repayment_create"),
 ]
-
-urlpatterns += staticfiles_urlpatterns()

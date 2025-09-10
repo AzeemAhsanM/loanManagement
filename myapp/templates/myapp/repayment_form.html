@@ -36,7 +36,7 @@
   $("#id_borrower").change(function () {
     var borrowerId = $(this).val();
     $.ajax({
-      url: "{% url 'ajax_load_loans' %}",
+      url: "{% url 'load_loans' %}",
       data: {
         "borrower_id": borrowerId
       },
